@@ -1,0 +1,29 @@
+   IDLE : begin
+		if(cmd_rdy) begin
+				if(cmd[15:12] == 4'b0100)
+					{
+						clr_cmd_rdy = 1;
+						tour_go = 1;
+						nxt_state = IDLE;
+					}
+				else if(cmd[15:12] == 4'b0000)
+					{
+						strt_cal = 1;
+						clr_cmd_rdy = 1;
+						nxt_state = CAL;
+					}
+				else if(cmd[15:13] == 3'b001)
+					{
+						move_cmd = 1;
+						nxt_state = UPDATE;
+					}
+
+				end
+		 else begin
+				nxt_state = IDLE;
+
+		      end
+			
+
+
+	  end

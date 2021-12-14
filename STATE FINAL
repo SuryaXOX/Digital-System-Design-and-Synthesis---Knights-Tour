@@ -1,0 +1,90 @@
+case(state)
+
+MOVE: begin
+			if(move_done)
+				nxt_state = SLOW;
+			if(move_done && cmd[12]) begin
+				nxt_state = SLOW;
+				fanfare_go = 1;
+			end
+			if(!move_done) begin
+				moving = 1;
+				inc_frwrd = 1;
+				nxt_state = MOVE;
+			end
+		end
+		
+UPDATE: begin
+			if (error > $signed(12'hFD0) && error < $signed(12'h030)) begin
+				nxt_state = MOVE;
+				moving = 1;
+				clr_frwrd = 1;
+			end
+			else begin
+				nxt_state = UPDATE;
+				moving = 1;
+				clr_frwrd = 1;			
+			end
+		end
+		
+SLOW: begin
+
+			if (frwrd == 0) begin
+							send_resp = 1;
+							nxt_state =IDLE;
+			end
+			else begin
+							moving = 1;
+							nxt_state = SLOW;
+							dec_frwrd = 1;
+			end
+		end
+		
+CAL: begin
+			if(cal_done) begin
+				send_resp = 1;
+				nxt_state = IDLE;
+	         	end
+			else 
+				nxt_state = CAL;
+		 
+		end
+		
+		
+IDLE : begin
+		if(cmd_rdy) begin
+				if(cmd[15:12] == 4'b0100)
+					{
+						clr_cmd_rdy = 1;
+						tour_go = 1;
+						nxt_state = IDLE;
+					}
+				else if(cmd[15:12] == 4'b0000)
+					{
+						strt_cal = 1;
+						clr_cmd_rdy = 1;
+						nxt_state = CAL;
+					}
+				else if(cmd[15:13] == 3'b001)
+					{
+						move_cmd = 1;
+						nxt_state = UPDATE;
+					}
+
+				end
+		 else begin
+				nxt_state = IDLE;
+
+		      end
+			
+
+
+	  end
+	  
+default: begin
+
+	nxt_state = IDLE;
+
+end
+
+endcase
