@@ -1,0 +1,84 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : KnightsTour
+Version: S-2021.06
+Date   : Wed Dec 15 19:15:43 2021
+****************************************
+
+Operating Conditions: tt0p85v25c   Library: saed32lvt_tt0p85v25c
+Wire Load Model Mode: enclosed
+
+  Startpoint: iCNTRL/q2_reg[0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: iCNTRL/rght_spd_reg[0]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  KnightsTour        16000                 saed32lvt_tt0p85v25c
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  iCNTRL/q2_reg[0]/CLK (DFFARX1_LVT)                      0.00       0.00 r
+  iCNTRL/q2_reg[0]/Q (DFFARX1_LVT)                        0.09       0.09 f
+  U1472/Y (NAND2X0_LVT)                                   0.05       0.14 r
+  iCNTRL/sub_111/U2_1/CO (FADDX1_LVT)                     0.09       0.23 r
+  iCNTRL/sub_111/U2_2/CO (FADDX1_LVT)                     0.08       0.31 r
+  iCNTRL/sub_111/U2_3/CO (FADDX1_LVT)                     0.08       0.40 r
+  iCNTRL/sub_111/U2_4/CO (FADDX1_LVT)                     0.08       0.48 r
+  iCNTRL/sub_111/U2_5/CO (FADDX1_LVT)                     0.08       0.56 r
+  iCNTRL/sub_111/U2_6/CO (FADDX1_LVT)                     0.08       0.64 r
+  iCNTRL/sub_111/U2_7/CO (FADDX1_LVT)                     0.08       0.72 r
+  iCNTRL/sub_111/U2_8/CO (FADDX1_LVT)                     0.08       0.80 r
+  iCNTRL/sub_111/U2_9/Y (XOR3X2_LVT)                      0.07       0.87 f
+  U2645/Y (INVX1_LVT)                                     0.05       0.92 r
+  U1495/Y (AND2X1_LVT)                                    0.05       0.97 r
+  U1493/Y (AO21X1_LVT)                                    0.05       1.02 r
+  U2578/Y (INVX1_LVT)                                     0.04       1.06 f
+  U1444/Y (NAND2X0_LVT)                                   0.05       1.11 r
+  U1443/Y (NAND2X0_LVT)                                   0.04       1.15 f
+  U2580/Y (XNOR2X1_LVT)                                   0.09       1.24 f
+  iCNTRL/mult_121/S2_3_2/S (FADDX1_LVT)                   0.12       1.35 r
+  U2543/Y (XOR2X1_LVT)                                    0.10       1.45 f
+  U2648/Y (XOR2X1_LVT)                                    0.10       1.55 r
+  iCNTRL/add_0_root_add_0_root_add_148_2/U1_5/CO (FADDX1_LVT)
+                                                          0.09       1.64 r
+  iCNTRL/add_0_root_add_0_root_add_148_2/U1_6/CO (FADDX1_LVT)
+                                                          0.08       1.72 r
+  iCNTRL/add_0_root_add_0_root_add_148_2/U1_7/CO (FADDX1_LVT)
+                                                          0.08       1.80 r
+  iCNTRL/add_0_root_add_0_root_add_148_2/U1_8/S (FADDX1_LVT)
+                                                          0.11       1.92 f
+  U2734/Y (INVX1_LVT)                                     0.04       1.96 r
+  iCNTRL/sub_171/U2_5/CO (FADDX1_LVT)                     0.09       2.05 r
+  iCNTRL/sub_171/U2_6/CO (FADDX1_LVT)                     0.08       2.13 r
+  iCNTRL/sub_171/U2_7/CO (FADDX1_LVT)                     0.08       2.22 r
+  iCNTRL/sub_171/U2_8/CO (FADDX1_LVT)                     0.08       2.30 r
+  iCNTRL/sub_171/U2_9/CO (FADDX1_LVT)                     0.08       2.38 r
+  U2647/Y (XNOR2X1_LVT)                                   0.09       2.47 r
+  U2831/Y (NAND2X4_LVT)                                   0.06       2.52 f
+  iCNTRL/rght_spd_reg[0]/SETB (DFFSSRX1_LVT)              0.02       2.55 f
+  data arrival time                                                  2.55
+
+  clock clk (rise edge)                                   3.00       3.00
+  clock network delay (ideal)                             0.00       3.00
+  clock uncertainty                                      -0.15       2.85
+  iCNTRL/rght_spd_reg[0]/CLK (DFFSSRX1_LVT)               0.00       2.85 r
+  library setup time                                     -0.16       2.69
+  data required time                                                 2.69
+  --------------------------------------------------------------------------
+  data required time                                                 2.69
+  data arrival time                                                 -2.55
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.14
+
+
+1

@@ -1,0 +1,81 @@
+###################################
+# Read in the verilog files first #
+###################################
+read_file -format sverilog { ./UART_tx.sv\
+                            ./UART_rx.sv\
+                            ./UART.v ./charge.sv ./cmd_proc.sv ./inert_intf.sv\
+			    ./inertial_integrator.sv ./IR_intf.sv\
+			    ./MtrDrv.sv ./PID.sv ./PWM11.sv\
+			    ./reset_synch.sv ./SPI_mnrch.sv\
+			    ./TourCmd.sv ./TourLogic.sv ./UART_wrapper.sv ./KnightsTour.sv}
+
+###################################
+# Set Current Design to top level #
+###################################
+set current_design KnightsTour
+
+
+################
+# Create clock #
+################
+create_clock -name "clk" -period 3 -waveform {0 1.5} {clk}
+set_dont_touch_network [find port clk]
+
+###################################
+# Constrain input timings & Drive #
+###################################
+set prim_inputs [remove_from_collection [all_inputs] [find port clk]]
+set_input_delay -clock clk 0.4 $prim_inputs
+set_driving_cell -lib_cell NAND2X2_LVT -library saed32lvt_tt0p85v25c $prim_inputs
+set_drive 0.1 rst_n
+
+
+###################################
+# Constrain output timing & loads #
+###################################
+set_output_delay -clock clk 0.4 [all_outputs]
+set_load 0.10 [all_outputs]
+
+
+##################################
+# Set wireload & transition time #
+##################################
+set_wire_load_model -name 16000 -library saed32lvt_tt0p85v25c
+set_max_transition 0.15 [current_design]
+
+
+######################
+# Compile the design #
+######################
+compile -map_effort medium
+
+#########################################
+# Set clock uncertainty and do fix hold #
+#########################################
+set_clock_uncertainty 0.15 clk
+set_fix_hold clk
+
+#####################
+# Flatten hierarchy #
+#####################
+ungroup -all -flatten
+
+###############
+# 2nd Compile #
+###############
+compile -map_effort medium
+
+###########################################
+# Report timing and Area report
+###########################################
+report_timing -delay min > min_delay.txt
+report_timing -delay max > max_delay.txt
+report_area > area_report.txt
+
+
+###########################################
+# Write out resulting synthesized netlist #
+###########################################
+write -format verilog KnightsTour -output KnightsTour.vg
+
+write_sdc KnightsTour.sdc
